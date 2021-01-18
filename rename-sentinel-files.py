@@ -61,8 +61,24 @@ for every_folder in os.listdir(updated_path):
 
 
 #regex para actualizar el nombre de las bandas
+band_name_remap_dict = {
+    "B01": "blue_coast_443_60.jp2",
+    "B02": "blue_492_10.jp2",
+    "B03": "green_560_10.jp2",
+    "B04": "red_665_10.jp2",
+    "B05": "nir_705_20.jp2",
+    "B06": "nir2_740_20.jp2",
+    "B07": "nir3_783_20.jp2",
+    "B08": "nir4_832_10.jp2",
+    "B8A": "nir4a_865_20.jp2",
+    "B09": "swir_945_60.jp2",
+    "B10": "swir2_1373_60.jp2",
+    "B11": "swir3_1614_20.jp2", 
+    "B12": "swir4_2202_20.jp2"
+}
 
 folder_path = os.getcwd()
+
 
 if check_path.isdir(folder_path):
     for current_folder in os.listdir(folder_path):
@@ -76,36 +92,12 @@ if check_path.isdir(folder_path):
         file_list = os.listdir(current_path_to_rename)
         file_list.sort()
 
-        for i in range(len(file_list)):
-            current_file = file_list[i]
+        for current_file in file_list:
+            #current_file = file_list[i]
             matches = re.finditer(regex, current_file)
             #print(current_file)
             for match in matches:
-                #print(match.group())
-                if(match.group()=="B01"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "blue_coast_443_60.jp2")
-                if(match.group()=="B02"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "blue_492_10.jp2")
-                if(match.group()=="B03"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "green_560_10.jp2")
-                if(match.group()=="B04"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "red_665_10.jp2")
-                if(match.group()=="B05"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "nir_705_20.jp2")
-                if(match.group()=="B06"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "nir2_740_20.jp2")
-                if(match.group()=="B07"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "nir3_783_20.jp2")
-                if(match.group()=="B08"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "nir4_832_10.jp2")
-                if(match.group()=="B8A"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "nir4a_865_20.jp2")
-                if(match.group()=="B09"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir_945_60.jp2")
-                if(match.group()=="B10"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir2_1373_60.jp2")
-                if(match.group()=="B11"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir3_1614_20.jp2")
-                if(match.group()=="B12"):
-                    os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir4_2202_20.jp2")
+                for key in band_name_remap_dict:
+                    if(match.group()==key):
+                        os.rename(current_path_to_rename + current_file, current_path_to_rename + band_name_remap_dict[key])
     
