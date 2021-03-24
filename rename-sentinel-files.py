@@ -6,6 +6,12 @@ from os import path as check_path
 os.chdir(".") #indico que el directorio de trabajo es en el que estoy parada
 current_path = os.getcwd()
 
+###################
+print("###################")
+print("starting renaming process of zipped folders")
+print("###################")
+###################
+
 #regex para limpiar el nombre de los archivos comprimidos
 regex = r"(\d{8})"
 
@@ -16,11 +22,20 @@ for current_file in os.listdir(current_path):
         for match in matches:
             temporal, file_extension = os.path.splitext(current_file)
             new_filename = current_path +"/"+ match.group() + file_extension
-        
+            print("NEW FILENAME: " + new_filename)
             os.rename(current_path +"/"+ current_file, new_filename)
 
+#pausa para verificar que esté todo ok
+input("PRESS ANY KEY TO CONTINUE")
+
+###################
+print("###################")
+print("starting unzipping process")
+print("###################")
+###################
+
 #agrego un nuevo directorio para guardar los archivos descomprimidos
-os.mkdir("unzipped") 
+os.mkdir("unzipped")
 
 #descomprimo los archivos necesarios
 for zipped_file in os.listdir(current_path):
@@ -28,7 +43,16 @@ for zipped_file in os.listdir(current_path):
     if file_extension == ".zip":
         with zipfile.ZipFile(zipped_file, 'r') as zip_ref:
             zip_ref.extractall("unzipped")
+            print("EXTRACTED: " + zipped_file)
 
+#pausa para verificar que esté todo ok
+input("PRESS ANY KEY TO CONTINUE")
+
+###################
+print("###################")
+print("starting renaming process of unzipped folders")
+print("###################")
+###################
 
 #actualizo el directorio de trabajo a la carpeta de los archivos descomprimidos
 os.chdir("unzipped")
@@ -42,7 +66,17 @@ for unzipped_file in os.listdir(updated_path):
     for match in matches:
         temporal, file_extension = os.path.splitext(unzipped_file)
         new_filename = match.group() + file_extension
+        print("NEW FILENAME: " + new_filename)
         os.rename(unzipped_file, new_filename)
+
+#pausa para verificar que esté todo ok
+input("PRESS ANY KEY TO CONTINUE")
+
+###################
+print("###################")
+print("starting renaming process of folders under GRANULE PATH")
+print("###################")
+###################
 
 #regex para limpiar el nombre de las carpetas correspondientes adentro de GRANULE
 regex = r"(\d{8})"
@@ -57,11 +91,20 @@ for every_folder in os.listdir(updated_path):
             for match in matches:
                 new_folder_name = internal_path + "MSIL1C_" + match.group()
                 #print(new_folder_name)
+                print("NEW FOLDER NAME: " + new_folder_name)
                 os.rename(internal_path + internal_folder, new_folder_name)
 
 
-#regex para actualizar el nombre de las bandas
+#pausa para verificar que esté todo ok
+input("PRESS ANY KEY TO CONTINUE")
 
+###################
+print("###################")
+print("starting renaming process of spectral bands")
+print("###################")
+###################
+
+#regex para actualizar el nombre de las bandas
 folder_path = os.getcwd()
 
 if check_path.isdir(folder_path):
@@ -108,4 +151,5 @@ if check_path.isdir(folder_path):
                     os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir3_1614_20.jp2")
                 if(match.group()=="B12"):
                     os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir4_2202_20.jp2")
-    
+            
+print("ALLES GUT")
