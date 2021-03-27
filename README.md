@@ -4,12 +4,13 @@
 
 Tiny script to manage (unzip and rename) Sentinel-2 MSI files
 
-## usage (without docker)
+## usage
+### without docke
 
     python src/main.py --path "path-to-your-sentinel-files"
 
-## usage (with docker)
-### 1) build docker image
+### with docker
+#### 1) build docker image
     docker build -f .ci/Dockerfile -t sentinel-scripts .
-### 2) execute it
+#### 2) execute it
     docker run -it -v /path-to-your-sentinel-files:/project sentinel-scripts --path /project bash
