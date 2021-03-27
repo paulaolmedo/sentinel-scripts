@@ -48,9 +48,14 @@ class RenameRaster:
         for zipped_file in os.listdir(current_path):
             temporal, file_extension = os.path.splitext(zipped_file)
             if file_extension == ".zip":
-                with zipfile.ZipFile(zipped_file, 'r') as zip_ref:
-                    zip_ref.extractall("unzipped")
-                    print("EXTRACTED: " + zipped_file)
+                try:
+                    with zipfile.ZipFile(zipped_file, 'r') as zip_ref:
+                        zip_ref.extractall("unzipped")
+                        print("EXTRACTED: " + zipped_file)
+
+                except:
+                    print("not a zipfile: " + zipped_file)
+                
 
         # actualizo el directorio de trabajo a la carpeta de los archivos descomprimidos
         os.chdir("unzipped")
