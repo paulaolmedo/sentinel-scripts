@@ -53,9 +53,8 @@ class RenameRaster:
                         zip_ref.extractall("unzipped")
                         print("EXTRACTED: " + zipped_file)
 
-                except:
+                except zipfile.BadZipFile:
                     print("not a zipfile: " + zipped_file)
-                
 
         # actualizo el directorio de trabajo a la carpeta de los archivos descomprimidos
         os.chdir("unzipped")
