@@ -178,4 +178,5 @@ class RenameRaster:
                             if(match.group() == "B12"):
                                 os.rename(current_path_to_rename + current_file, current_path_to_rename + "swir4_2202_20.jp2")
 
+            return current_path_to_rename
             print("ALLES GUT")
